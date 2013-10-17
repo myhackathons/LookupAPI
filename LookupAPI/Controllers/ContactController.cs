@@ -115,73 +115,73 @@ namespace LookupAPI.Controllers
             return contact;
         }
 
-        // PUT api/Contact/5
-        public HttpResponseMessage PutContact(Guid id, Contact contact)
-        {
-            if (!ModelState.IsValid)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
-            }
+        ////// PUT api/Contact/5
+        ////public HttpResponseMessage PutContact(Guid id, Contact contact)
+        ////{
+        ////    if (!ModelState.IsValid)
+        ////    {
+        ////        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+        ////    }
 
-            if (id != contact.ContactId)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-            }
+        ////    if (id != contact.ContactId)
+        ////    {
+        ////        return Request.CreateResponse(HttpStatusCode.BadRequest);
+        ////    }
 
-            db.Entry(contact).State = EntityState.Modified;
+        ////    db.Entry(contact).State = EntityState.Modified;
 
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
-            }
+        ////    try
+        ////    {
+        ////        db.SaveChanges();
+        ////    }
+        ////    catch (DbUpdateConcurrencyException ex)
+        ////    {
+        ////        return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
+        ////    }
 
-            return Request.CreateResponse(HttpStatusCode.OK);
-        }
+        ////    return Request.CreateResponse(HttpStatusCode.OK);
+        ////}
 
-        // POST api/Contact
-        public HttpResponseMessage PostContact(Contact contact)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Contacts.Add(contact);
-                db.SaveChanges();
+        ////// POST api/Contact
+        ////public HttpResponseMessage PostContact(Contact contact)
+        ////{
+        ////    if (ModelState.IsValid)
+        ////    {
+        ////        db.Contacts.Add(contact);
+        ////        db.SaveChanges();
 
-                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, contact);
-                response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = contact.ContactId }));
-                return response;
-            }
-            else
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
-            }
-        }
+        ////        HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, contact);
+        ////        response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = contact.ContactId }));
+        ////        return response;
+        ////    }
+        ////    else
+        ////    {
+        ////        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+        ////    }
+        ////}
 
-        // DELETE api/Contact/5
-        public HttpResponseMessage DeleteContact(Guid id)
-        {
-            Contact contact = db.Contacts.Find(id);
-            if (contact == null)
-            {
-                return Request.CreateResponse(HttpStatusCode.NotFound);
-            }
+        ////// DELETE api/Contact/5
+        ////public HttpResponseMessage DeleteContact(Guid id)
+        ////{
+        ////    Contact contact = db.Contacts.Find(id);
+        ////    if (contact == null)
+        ////    {
+        ////        return Request.CreateResponse(HttpStatusCode.NotFound);
+        ////    }
 
-            db.Contacts.Remove(contact);
+        ////    db.Contacts.Remove(contact);
 
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
-            }
+        ////    try
+        ////    {
+        ////        db.SaveChanges();
+        ////    }
+        ////    catch (DbUpdateConcurrencyException ex)
+        ////    {
+        ////        return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
+        ////    }
 
-            return Request.CreateResponse(HttpStatusCode.OK, contact);
-        }
+        ////    return Request.CreateResponse(HttpStatusCode.OK, contact);
+        ////}
 
         protected override void Dispose(bool disposing)
         {
