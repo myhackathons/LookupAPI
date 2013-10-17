@@ -15,13 +15,21 @@ using System.Text;
 
 namespace LookupAPI.Controllers
 {
+    public class LookupCategory
+    {
+        public Guid CategoryId { get; set; }
+        public string CategoryName { get; set; }
+        public int CategorySequence { get; set; }
+        public string Icon { get; set; }
+        public List<LookUpContact> Contacts { get; set; }
+    }
     public class LookUpContact
     {
         public Guid ContactID { get; set; }
         public string ContactName { get; set; }
         public string Description { get; set; }
-        public List<LookupContactDetail> Details { get; set; }
         public string Icon { get; set; }
+        public List<LookupContactDetail> Details { get; set; }
     }
     public class LookupContactDetail
     {
@@ -37,24 +45,42 @@ namespace LookupAPI.Controllers
         private string countryName = "", countryCode = "", stateName = "", stateCode = "", cityName = "";
 
         // GET api/Contact
-        public List<LookUpContact> GetContacts(double latitude, double longitude)
+        public List<LookupCategory> GetContacts(double latitude, double longitude)
         {
             GetLocation();
             var countrylevelcontacts = db.Contacts.Where(w => w.Country.CountryName == countryName && w.State == null && w.City == null);
             var statelevelcontacts = db.Contacts.Where(w => w.Country.CountryName == countryName && w.State.StateName == stateName && w.City == null);
             var citylevelcontacts = db.Contacts.Where(w => w.Country.CountryName == countryName && w.State.StateName == stateName && w.City.CityName == cityName);
-            List<LookUpContact> contacts = new List<LookUpContact>();
-            FormatContacts(countrylevelcontacts, contacts);
-            FormatContacts(statelevelcontacts, contacts);
-            FormatContacts(citylevelcontacts, contacts);
-            return contacts;
+            List<LookupCategory> categories = new List<LookupCategory>();
+            FormatContacts(countrylevelcontacts, categories);
+            FormatContacts(statelevelcontacts, categories);
+            FormatContacts(citylevelcontacts, categories);
+            return categories;
         }
-  
 
-        private static void FormatContacts(IQueryable<Contact> countrylevelcontacts, List<LookUpContact> contacts)
+
+        private static void FormatContacts(IQueryable<Contact> countrylevelcontacts, List<LookupCategory> categories)
         {
+            List<string> categorynames = new List<string>();
+            LookupCategory currentCategory = new LookupCategory();
             foreach (Contact contact in countrylevelcontacts)
             {
+                if (!categorynames.Contains(contact.Category.CategoryName))
+                {
+                    LookupCategory category = new LookupCategory();
+                    category.CategoryId = contact.CategoryId;
+                    category.CategoryName = contact.Category.CategoryName;
+                    category.CategorySequence = (int)contact.Category.Sequence;
+                    category.Icon = contact.Category.Icon;
+                    category.Contacts = new List<LookUpContact>();
+                    categories.Add(category);
+                    categorynames.Add(category.CategoryName);
+                    currentCategory = category;
+                }
+                else
+                {
+                    currentCategory = categories.Where(w => w.CategoryName == contact.Category.CategoryName).FirstOrDefault();
+                }
                 LookUpContact lookupContact = new LookUpContact();
                 lookupContact.ContactID = contact.ContactId;
                 lookupContact.ContactName = contact.ContactName;
@@ -70,7 +96,7 @@ namespace LookupAPI.Controllers
                     lookupDetail.Type = detail.ContactType.ContactTypeName;
                     lookupContact.Details.Add(lookupDetail);
                 }
-                contacts.Add(lookupContact);
+                currentCategory.Contacts.Add(lookupContact);
             }
         }
 
