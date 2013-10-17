@@ -1,0 +1,550 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LookupModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="LookupModelStoreContainer">
+          <EntitySet Name="Category" EntityType="LookupModel.Store.Category" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="City" EntityType="LookupModel.Store.City" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Contact" EntityType="LookupModel.Store.Contact" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ContactDetail" EntityType="LookupModel.Store.ContactDetail" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ContactType" EntityType="LookupModel.Store.ContactType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Country" EntityType="LookupModel.Store.Country" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="State" EntityType="LookupModel.Store.State" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_City_State" Association="LookupModel.Store.FK_City_State">
+            <End Role="State" EntitySet="State" />
+            <End Role="City" EntitySet="City" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contact_Category" Association="LookupModel.Store.FK_Contact_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Contact" EntitySet="Contact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contact_City" Association="LookupModel.Store.FK_Contact_City">
+            <End Role="City" EntitySet="City" />
+            <End Role="Contact" EntitySet="Contact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contact_Country" Association="LookupModel.Store.FK_Contact_Country">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="Contact" EntitySet="Contact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contact_State" Association="LookupModel.Store.FK_Contact_State">
+            <End Role="State" EntitySet="State" />
+            <End Role="Contact" EntitySet="Contact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContactDetail_Contact" Association="LookupModel.Store.FK_ContactDetail_Contact">
+            <End Role="Contact" EntitySet="Contact" />
+            <End Role="ContactDetail" EntitySet="ContactDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContactDetail_ContactType" Association="LookupModel.Store.FK_ContactDetail_ContactType">
+            <End Role="ContactType" EntitySet="ContactType" />
+            <End Role="ContactDetail" EntitySet="ContactDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_State_Country" Association="LookupModel.Store.FK_State_Country">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="State" EntitySet="State" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Sequence" Type="int" />
+          <Property Name="Icon" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="CityId" />
+          </Key>
+          <Property Name="CityId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="StateId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CityName" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Icon" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="ContactId" />
+          </Key>
+          <Property Name="ContactId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CategoryId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CountryId" Type="uniqueidentifier" />
+          <Property Name="StateId" Type="uniqueidentifier" />
+          <Property Name="CityId" Type="uniqueidentifier" />
+          <Property Name="ContactName" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="ContactDescription" Type="nvarchar(max)" />
+          <Property Name="Icon" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ContactDetail">
+          <Key>
+            <PropertyRef Name="ContactDetailId" />
+          </Key>
+          <Property Name="ContactDetailId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ContactId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ContactTypeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ContactDetails" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="IsDefault" Type="bit" />
+          <Property Name="IsTollFree" Type="bit" />
+          <Property Name="IsPerson" Type="bit" />
+          <Property Name="Conditions" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Icon" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ContactType">
+          <Key>
+            <PropertyRef Name="ContactTypeId" />
+          </Key>
+          <Property Name="ContactTypeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ContactTypeName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Sequence" Type="tinyint" />
+          <Property Name="Icon" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="CountryId" />
+          </Key>
+          <Property Name="CountryId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CountryName" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Icon" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="StateId" />
+          </Key>
+          <Property Name="StateId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CountryId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="StateName" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Icon" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_City_State">
+          <End Role="State" Type="LookupModel.Store.State" Multiplicity="1" />
+          <End Role="City" Type="LookupModel.Store.City" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="City">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contact_Category">
+          <End Role="Category" Type="LookupModel.Store.Category" Multiplicity="1" />
+          <End Role="Contact" Type="LookupModel.Store.Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Contact">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contact_City">
+          <End Role="City" Type="LookupModel.Store.City" Multiplicity="0..1" />
+          <End Role="Contact" Type="LookupModel.Store.Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="CityId" />
+            </Principal>
+            <Dependent Role="Contact">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contact_Country">
+          <End Role="Country" Type="LookupModel.Store.Country" Multiplicity="0..1" />
+          <End Role="Contact" Type="LookupModel.Store.Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="Contact">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contact_State">
+          <End Role="State" Type="LookupModel.Store.State" Multiplicity="0..1" />
+          <End Role="Contact" Type="LookupModel.Store.Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="Contact">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContactDetail_Contact">
+          <End Role="Contact" Type="LookupModel.Store.Contact" Multiplicity="1" />
+          <End Role="ContactDetail" Type="LookupModel.Store.ContactDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contact">
+              <PropertyRef Name="ContactId" />
+            </Principal>
+            <Dependent Role="ContactDetail">
+              <PropertyRef Name="ContactId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContactDetail_ContactType">
+          <End Role="ContactType" Type="LookupModel.Store.ContactType" Multiplicity="1" />
+          <End Role="ContactDetail" Type="LookupModel.Store.ContactDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContactType">
+              <PropertyRef Name="ContactTypeId" />
+            </Principal>
+            <Dependent Role="ContactDetail">
+              <PropertyRef Name="ContactTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_State_Country">
+          <End Role="Country" Type="LookupModel.Store.Country" Multiplicity="1" />
+          <End Role="State" Type="LookupModel.Store.State" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="State">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LookupModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="LookupEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="LookupModel.Category" />
+          <EntitySet Name="Cities" EntityType="LookupModel.City" />
+          <EntitySet Name="Contacts" EntityType="LookupModel.Contact" />
+          <EntitySet Name="ContactDetails" EntityType="LookupModel.ContactDetail" />
+          <EntitySet Name="ContactTypes" EntityType="LookupModel.ContactType" />
+          <EntitySet Name="Countries" EntityType="LookupModel.Country" />
+          <EntitySet Name="States" EntityType="LookupModel.State" />
+          <AssociationSet Name="FK_Contact_Category" Association="LookupModel.FK_Contact_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Contact" EntitySet="Contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_City_State" Association="LookupModel.FK_City_State">
+            <End Role="State" EntitySet="States" />
+            <End Role="City" EntitySet="Cities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contact_City" Association="LookupModel.FK_Contact_City">
+            <End Role="City" EntitySet="Cities" />
+            <End Role="Contact" EntitySet="Contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contact_Country" Association="LookupModel.FK_Contact_Country">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="Contact" EntitySet="Contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contact_State" Association="LookupModel.FK_Contact_State">
+            <End Role="State" EntitySet="States" />
+            <End Role="Contact" EntitySet="Contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContactDetail_Contact" Association="LookupModel.FK_ContactDetail_Contact">
+            <End Role="Contact" EntitySet="Contacts" />
+            <End Role="ContactDetail" EntitySet="ContactDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContactDetail_ContactType" Association="LookupModel.FK_ContactDetail_ContactType">
+            <End Role="ContactType" EntitySet="ContactTypes" />
+            <End Role="ContactDetail" EntitySet="ContactDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_State_Country" Association="LookupModel.FK_State_Country">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="State" EntitySet="States" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Guid" Nullable="false" />
+          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="Sequence" Type="Int32" />
+          <NavigationProperty Name="Contacts" Relationship="LookupModel.FK_Contact_Category" FromRole="Category" ToRole="Contact" />
+          <Property Type="String" Name="Icon" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="CityId" />
+          </Key>
+          <Property Name="CityId" Type="Guid" Nullable="false" />
+          <Property Name="StateId" Type="Guid" Nullable="false" />
+          <Property Name="CityName" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="State" Relationship="LookupModel.FK_City_State" FromRole="City" ToRole="State" />
+          <NavigationProperty Name="Contacts" Relationship="LookupModel.FK_Contact_City" FromRole="City" ToRole="Contact" />
+          <Property Type="String" Name="Icon" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="ContactId" />
+          </Key>
+          <Property Name="ContactId" Type="Guid" Nullable="false" />
+          <Property Name="CategoryId" Type="Guid" Nullable="false" />
+          <Property Name="CountryId" Type="Guid" />
+          <Property Name="StateId" Type="Guid" />
+          <Property Name="CityId" Type="Guid" />
+          <Property Name="ContactName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="LookupModel.FK_Contact_Category" FromRole="Contact" ToRole="Category" />
+          <NavigationProperty Name="City" Relationship="LookupModel.FK_Contact_City" FromRole="Contact" ToRole="City" />
+          <NavigationProperty Name="Country" Relationship="LookupModel.FK_Contact_Country" FromRole="Contact" ToRole="Country" />
+          <NavigationProperty Name="State" Relationship="LookupModel.FK_Contact_State" FromRole="Contact" ToRole="State" />
+          <NavigationProperty Name="ContactDetails" Relationship="LookupModel.FK_ContactDetail_Contact" FromRole="Contact" ToRole="ContactDetail" />
+          <Property Type="String" Name="ContactDescription" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Icon" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ContactDetail">
+          <Key>
+            <PropertyRef Name="ContactDetailId" />
+          </Key>
+          <Property Name="ContactDetailId" Type="Guid" Nullable="false" />
+          <Property Name="ContactId" Type="Guid" Nullable="false" />
+          <Property Name="ContactTypeId" Type="Guid" Nullable="false" />
+          <Property Name="ContactDetails" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="IsDefault" Type="Boolean" />
+          <Property Name="IsTollFree" Type="Boolean" />
+          <Property Name="IsPerson" Type="Boolean" />
+          <Property Name="Conditions" Type="String" MaxLength="1000" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Contact" Relationship="LookupModel.FK_ContactDetail_Contact" FromRole="ContactDetail" ToRole="Contact" />
+          <NavigationProperty Name="ContactType" Relationship="LookupModel.FK_ContactDetail_ContactType" FromRole="ContactDetail" ToRole="ContactType" />
+          <Property Type="String" Name="Icon" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ContactType">
+          <Key>
+            <PropertyRef Name="ContactTypeId" />
+          </Key>
+          <Property Name="ContactTypeId" Type="Guid" Nullable="false" />
+          <Property Name="ContactTypeName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Sequence" Type="Byte" />
+          <NavigationProperty Name="ContactDetails" Relationship="LookupModel.FK_ContactDetail_ContactType" FromRole="ContactType" ToRole="ContactDetail" />
+          <Property Type="String" Name="Icon" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="CountryId" />
+          </Key>
+          <Property Name="CountryId" Type="Guid" Nullable="false" />
+          <Property Name="CountryName" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Contacts" Relationship="LookupModel.FK_Contact_Country" FromRole="Country" ToRole="Contact" />
+          <NavigationProperty Name="States" Relationship="LookupModel.FK_State_Country" FromRole="Country" ToRole="State" />
+          <Property Type="String" Name="Icon" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="StateId" />
+          </Key>
+          <Property Name="StateId" Type="Guid" Nullable="false" />
+          <Property Name="CountryId" Type="Guid" Nullable="false" />
+          <Property Name="StateName" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Cities" Relationship="LookupModel.FK_City_State" FromRole="State" ToRole="City" />
+          <NavigationProperty Name="Contacts" Relationship="LookupModel.FK_Contact_State" FromRole="State" ToRole="Contact" />
+          <NavigationProperty Name="Country" Relationship="LookupModel.FK_State_Country" FromRole="State" ToRole="Country" />
+          <Property Type="String" Name="Icon" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Contact_Category">
+          <End Role="Category" Type="LookupModel.Category" Multiplicity="1" />
+          <End Role="Contact" Type="LookupModel.Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Contact">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_City_State">
+          <End Role="State" Type="LookupModel.State" Multiplicity="1" />
+          <End Role="City" Type="LookupModel.City" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="City">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contact_City">
+          <End Role="City" Type="LookupModel.City" Multiplicity="0..1" />
+          <End Role="Contact" Type="LookupModel.Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="CityId" />
+            </Principal>
+            <Dependent Role="Contact">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contact_Country">
+          <End Role="Country" Type="LookupModel.Country" Multiplicity="0..1" />
+          <End Role="Contact" Type="LookupModel.Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="Contact">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contact_State">
+          <End Role="State" Type="LookupModel.State" Multiplicity="0..1" />
+          <End Role="Contact" Type="LookupModel.Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="Contact">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContactDetail_Contact">
+          <End Role="Contact" Type="LookupModel.Contact" Multiplicity="1" />
+          <End Role="ContactDetail" Type="LookupModel.ContactDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contact">
+              <PropertyRef Name="ContactId" />
+            </Principal>
+            <Dependent Role="ContactDetail">
+              <PropertyRef Name="ContactId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContactDetail_ContactType">
+          <End Role="ContactType" Type="LookupModel.ContactType" Multiplicity="1" />
+          <End Role="ContactDetail" Type="LookupModel.ContactDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContactType">
+              <PropertyRef Name="ContactTypeId" />
+            </Principal>
+            <Dependent Role="ContactDetail">
+              <PropertyRef Name="ContactTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_State_Country">
+          <End Role="Country" Type="LookupModel.Country" Multiplicity="1" />
+          <End Role="State" Type="LookupModel.State" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="State">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LookupModelStoreContainer" CdmEntityContainer="LookupEntities">
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="LookupModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cities">
+            <EntityTypeMapping TypeName="LookupModel.City">
+              <MappingFragment StoreEntitySet="City">
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contacts">
+            <EntityTypeMapping TypeName="LookupModel.Contact">
+              <MappingFragment StoreEntitySet="Contact">
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="ContactDescription" ColumnName="ContactDescription" />
+                <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ContactDetails">
+            <EntityTypeMapping TypeName="LookupModel.ContactDetail">
+              <MappingFragment StoreEntitySet="ContactDetail">
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="ContactDetailId" ColumnName="ContactDetailId" />
+                <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+                <ScalarProperty Name="ContactTypeId" ColumnName="ContactTypeId" />
+                <ScalarProperty Name="ContactDetails" ColumnName="ContactDetails" />
+                <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+                <ScalarProperty Name="IsTollFree" ColumnName="IsTollFree" />
+                <ScalarProperty Name="IsPerson" ColumnName="IsPerson" />
+                <ScalarProperty Name="Conditions" ColumnName="Conditions" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ContactTypes">
+            <EntityTypeMapping TypeName="LookupModel.ContactType">
+              <MappingFragment StoreEntitySet="ContactType">
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="ContactTypeId" ColumnName="ContactTypeId" />
+                <ScalarProperty Name="ContactTypeName" ColumnName="ContactTypeName" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="LookupModel.Country">
+              <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="States">
+            <EntityTypeMapping TypeName="LookupModel.State">
+              <MappingFragment StoreEntitySet="State">
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
