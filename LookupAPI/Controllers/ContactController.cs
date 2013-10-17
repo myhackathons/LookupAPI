@@ -55,7 +55,7 @@ namespace LookupAPI.Controllers
             FormatContacts(countrylevelcontacts, categories);
             FormatContacts(statelevelcontacts, categories);
             FormatContacts(citylevelcontacts, categories);
-            return categories;
+            return categories.OrderBy(w => w.CategorySequence).ToList() ;
         }
 
 
